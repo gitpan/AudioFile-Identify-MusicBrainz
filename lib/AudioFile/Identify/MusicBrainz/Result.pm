@@ -27,16 +27,7 @@ get/set the result relevance
 sub relevance {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
-    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
-      $self->{relevance} = $set->getFirstChild->toString;
-    } else {
-      $self->{relevance} = $set;
-    }
-    return $self;
-  } else {
-    return $self->{relevance};
-  }
+  return $self->_xmlChildAccessor("relevance", $set);
 }
 
 =head2 album
@@ -50,8 +41,12 @@ parameters, sets the ID of the album if called with a parameter.
 sub album {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->isa('XML::DOM::Element')) {
+  if (defined($set) and UNIVERSAL::isa($set, 'XML::DOM::Element')) {
     $self->{album} = $set->getAttributeNode('rdf:resource')->getValue;
+    return $self;
+  } elsif (defined($set)) {
+    # We seem to have been passed an album id, save it.
+    $self->{album} = $set;
     return $self;
   } else {
     return undef unless $self->{album};
@@ -90,12 +85,16 @@ with no parameters, sets the ID of the track if called with a parameter.
 sub track {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->isa('XML::DOM::Element')) {
+  if (defined($set) and UNIVERSAL::isa($set, 'XML::DOM::Element')) {
     $self->{track} = $set->getAttributeNode('rdf:resource')->getValue;
+    return $self;
+  } elsif (defined($set)) {
+    # We seem to have been passed a track id, save it.
+    $self->{track} = $set;
     return $self;
   } else {
     return undef unless $self->{track};
-    return $self->album->track($self->{track})->getData();
+    return $self->album->track($self->{track});
   }
 }
 

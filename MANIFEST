@@ -3,6 +3,7 @@ Makefile.PL
 META.yml
 COPYING
 MANIFEST			This list of files
+NINJA
 examples/query_test.pl
 examples/tagger.pl
 lib/AudioFile/Identify/MusicBrainz.pm
@@ -16,3 +17,7 @@ lib/AudioFile/Identify/MusicBrainz/Store.pm
 lib/AudioFile/Identify/MusicBrainz/Track.pm
 t/00use.t
 t/01objects.t
+t/02mb2.1.0.t
+t/03query_with_track_id.t
+t/04other_queries.t
+Changes

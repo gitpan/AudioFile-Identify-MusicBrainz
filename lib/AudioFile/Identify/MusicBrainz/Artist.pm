@@ -27,17 +27,9 @@ object to set.
 sub title {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
-    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
-      $self->{title} = $set->getFirstChild->toString;
-    } else {
-      $self->{title} = $set;
-    }
-    return $self;
-  } else {
-    return $self->{title};
-  }
+  return $self->_xmlChildAccessor("title", $set);
 }
+
 
 =head2 sortName
 
@@ -49,12 +41,7 @@ names.
 sub sortName {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->isa('XML::DOM::Element')and $set->getFirstChild) {
-    $self->{sortname} = $set->getFirstChild->toString;
-    return $self;
-  } else {
-    return $self->{sortname};
-  }
+  return $self->_xmlChildAccessor("sortname", $set);
 }
 
 

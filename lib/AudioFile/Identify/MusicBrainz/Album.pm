@@ -29,13 +29,9 @@ to set.
 sub title {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->isa('XML::DOM::Element') and $set->getFirstChild) {
-    $self->{title} = $set->getFirstChild->toString;
-    return $self;
-  } else {
-    return $self->{title};
-  }
+  return $self->_xmlChildAccessor("title", $set);
 }
+
 
 =head2 cdindexIdList
 
@@ -63,13 +59,9 @@ object, assuming this resource is in the store, which it should be.
 sub creator {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->isa('XML::DOM::Element')) {
-    $self->{creator} = $set->getAttributeNode("rdf:resource")->getValue;
-    return $self;
-  } else {
-    return $self->{creator};
-  }
+  return $self->_xmlAttributeAccessor("creator", $set);
 }
+
 
 =head2 artist
 
@@ -83,6 +75,86 @@ sub artist {
   return $self->store->artist($self->creator);
 }
 
+
+=head2 coverart
+
+Returns a string containing the URL to the Amazon.com images server
+for the album if one is available, otherwise returns C<undef>.
+
+=cut
+
+sub coverart {
+  my $self = shift;
+  my $set = shift;
+  my $val = $self->_xmlAttributeAccessor("coverart", $set);
+
+  if ($val eq "/images/no_coverart.png") {
+    delete $self->{coverart};
+    return undef;
+  }
+
+  return $val;
+}
+
+
+=head2 asin
+
+Returns the ASIN for the album specified in this Album object.  ASIN
+stands for Amazon Standard Identification Number.  It is a unique
+identifier for a product on amazon.com.  This value can be used for
+constructing links into the Amazon website for providing affiliate
+referrals or for retrieving images or other information.
+
+MusicBrainz only has ASIN values for a subset of all the albums in
+their database, so this property will quite possibly be C<undef> if
+MusicBrainz cannot provide a value.
+
+=cut
+
+sub asin {
+  my $self = shift;
+  my $set = shift;
+  return $self->_xmlChildAccessor("asin", $set);
+}
+
+
+=head2 releaseDateList
+
+Return a hash ref of release dates where the keys are country codes
+and the values are dates of release in the respective countries.  Will
+return C<undef> if MusicBrainz does not respond to the query with this
+information.
+
+=cut
+
+sub releaseDateList {
+  my $self = shift;
+  my $set = shift;
+
+  if (defined($set) and ref $set and $set->isa('XML::DOM::Element')) {
+
+    $self->{releaseDates} = {};
+
+    my $dates = $set->getElementsByTagName('mm:ReleaseDate');
+    for (my $i = 0; $i < $dates->getLength; $i++) {
+
+      my $date = $dates->item($i);
+
+      my $dateStr = $date->getElementsByTagName('dc:date')
+	->item(0)->getFirstChild()->getNodeValue();
+      my $ctryStr = $date->getElementsByTagName('mm:country')
+	->item(0)->getFirstChild()->getNodeValue();
+
+      $self->{releaseDates}->{$ctryStr} = $dateStr;
+    }
+
+    return $self;
+  } else {
+    return $self->{releaseDates};
+  }
+}
+
+
 =head2 releaseType
 
 get/set the releaseType property
@@ -92,13 +164,9 @@ get/set the releaseType property
 sub releaseType {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
-    $self->{releaseType} = $set;
-    return $self;
-  } else {
-    return $self->{releaseType};
-  }
+  return $self->_xmlAttributeAccessor("releaseType", $set);
 }
+
 
 =head2 releaseStatus
 
@@ -109,13 +177,9 @@ get/set the releaseStatus property
 sub releaseStatus {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
-    $self->{releaseStatus} = $set;
-    return $self;
-  } else {
-    return $self->{releaseStatus};
-  }
+  return $self->_xmlAttributeAccessor("releaseStatus", $set);
 }
+
 
 =head2 trackList
 
@@ -129,14 +193,15 @@ use the C<track> or C<tracks> method.
 sub trackList {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->isa('XML::DOM::Element')) {
+  if (defined($set) and UNIVERSAL::isa($set, 'XML::DOM::Element')) {
     my $tracks = $set->getElementsByTagName('rdf:li');
     for (my $i = 0; $i < $tracks->getLength; $i++) {
       my $id = $tracks->item($i)->getAttributeNode('rdf:resource')->getValue;
-      my $track = AudioFile::Identify::MusicBrainz::Track->new()
-                                                         ->id($id)
-                                                         ->store($self->store);
-      $self->store->track($id, $track);
+      my $track = AudioFile::Identify::MusicBrainz::Track->new($id,
+							       $self->store);
+      # Initialize the trackNum based on the position in the
+      # mm:trackList sequence
+      $track->trackNum($i + 1);
       $self->{tracks}->[$i] = $id;
     }
     return $self;
@@ -144,6 +209,7 @@ sub trackList {
     croak "Must call with node\n";
   }
 }
+
 
 =head2 tracks
 
@@ -157,7 +223,8 @@ sub tracks {
   return [ map { $self->store->track($_) } @{ $self->{tracks} } ];
 }
 
-=head2 tracks(index)
+
+=head2 track(index)
 
 returns a C<AudioFile::Identify::MusicBrainz::Track> object for the track
 with the give track number.
@@ -174,7 +241,6 @@ sub track {
   } else {
     return $self->store->track($self->{tracks}->[$track]);
   }
-
 }
 
 

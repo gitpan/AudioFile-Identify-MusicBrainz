@@ -67,6 +67,10 @@ The RDF module is programmatically generated from queries.h in the
 libmusicbrainz client library distribution. See
 L<AudioFile::Identify::MusicBrainz::RDF> for specific copyright information.
 
+Mike McCallister <mike@metalogue.com> contibuted a fantastic patch in March
+2004 to fix the module after a protocol change and added lazy object loading
+and lots of nice abstractions. Lovely stuff.
+
 =head1 BUGS
 
 I use C<XML::DOM>, and not something in the RDF space. I have also
@@ -88,6 +92,6 @@ use strict;
 use warnings::register;
 use lib './lib';
 
-our $VERSION=0.23;
+our $VERSION=0.30;
 
 1;

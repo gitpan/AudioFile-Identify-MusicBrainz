@@ -1,0 +1,9 @@
+Revision history for URI::Title
+
+0.1 2003/08/30
+  - Initial release.
+  
+0.3 2004/03/16
+  - Integration of fantastic patch by Mike McCallister <mike@metalogue.com>
+    for protocol changes and lazy object loading.
+  

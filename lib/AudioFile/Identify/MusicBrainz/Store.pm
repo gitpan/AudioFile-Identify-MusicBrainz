@@ -40,6 +40,77 @@ sub init {
   1;
 }
 
+
+=head2 cleanObjId(id)
+
+Package method that returns a cleaned up version of the object id, or
+croaks if id is undefined.
+
+=cut
+
+sub cleanObjId {
+    my $id = shift;
+    croak "Need an id" unless defined($id);
+    $id =~ s!http://mm.!http://!; # GAAAAAAAH
+    return $id;
+}
+
+
+
+=head2 cleanObjId(id)
+
+Package method that determines the type of an object from its URL.
+Returns the type as a string, or croaks if id is undefined.
+
+=cut
+
+sub objType {
+    my $id = shift;
+    croak "Need an id" unless defined($id);
+    $id =~ m{musicbrainz.org/(\w+)/};
+    return $1;
+}
+
+
+=head2 obj(id, [objRef])
+
+get/set an object with a given id in the store.
+
+=cut
+
+sub obj {
+    my $self = shift;
+    my $id = cleanObjId(shift);
+    my $set = shift;
+    my $type = objType($id);
+
+    if (defined($set)) {
+        $self->{$type}{$id} = $set;
+        return $self;
+    } else {
+        my $obj = $self->{$type}{$id} or croak "No $type with id $id";
+        return $obj;
+    }
+}
+
+
+=head2 objExists(id)
+
+Returns the reference to the object with the passed C<id>.  This
+evaluates to true if an object with a given id exists in the store,
+false otherwise.
+
+=cut
+
+sub objExists {
+    my $self = shift;
+    my $id = cleanObjId(shift);
+    my $type = objType($id);
+
+    return $self->{$type}{$id};
+}
+
+
 =head2 album(id, [album])
 
 get/set an album with a given id in the store.
@@ -47,20 +118,10 @@ get/set an album with a given id in the store.
 =cut
 
 sub album {
-  my $self = shift;
-  my $id = shift;
-  croak "Need an id" unless $id;
-  $id =~ s!http://mm.!http://!; # GAAAAAAAH
-  my $set = shift;
-  if (defined($set)) {
-#    print STDERR "Stored album with id $id\n";
-    $self->{album}{$id} = $set;
-    return $self;
-  } else {
-    my $album = $self->{album}{$id} or croak "No album with id $id";
-    return $album;
-  }
+    my $self = shift;
+    return $self->obj(@_);
 }
+
 
 =head2 artist(id, [album])
 
@@ -69,20 +130,10 @@ get/set an artist with a given id in the store.
 =cut
 
 sub artist {
-  my $self = shift;
-  my $id = shift;
-  croak "Need an id" unless $id;
-  $id =~ s!http://mm.!http://!; # GAAAAAAAH
-  my $set = shift;
-  if (defined($set)) {
-#    print STDERR "Stored artist with id $id\n";
-    $self->{artist}{$id} = $set;
-    return $self;
-  } else {
-    my $artist = $self->{artist}{$id} or croak "No artist with id $id";
-    return $artist;
-  }
+    my $self = shift;
+    return $self->obj(@_);
 }
+
 
 =head2 track(id, [album])
 
@@ -91,21 +142,9 @@ get/set an track with a given id in the store.
 =cut
 
 sub track {
-  my $self = shift;
-  my $id = shift;
-  croak "Need an id" unless $id;
-  $id =~ s!http://mm.!http://!; # GAAAAAAAH
-  my $set = shift;
-  if (defined($set)) {
-#    print STDERR "Stored track with id $id\n";
-    $self->{track}{$id} = $set;
-    return $self;
-  } else {
-    my $track = $self->{track}{$id} or croak "No track with id $id";
-    return $track;
-  }
+    my $self = shift;
+    return $self->obj(@_);
 }
-
 
 1;
 
