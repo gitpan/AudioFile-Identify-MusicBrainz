@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use lib './lib';
-use Test::More tests => 18;
+use Test::More tests => 19;
 
 use_ok('AudioFile::Identify::MusicBrainz::Store');
 use_ok('AudioFile::Identify::MusicBrainz::Album');
@@ -33,3 +33,4 @@ ok(my $result = $query->result(0), "got a result");
 ok($result->track->title =~ /yellow/i, "result title contains query string");
 ok($result->track->artist->title =~ /coldplay/i, "result artist contains query string");
 ok($result->album->title, "album has a title");
+ok(scalar( @ { $result->album->tracks } ) > 1, "album has tracks");

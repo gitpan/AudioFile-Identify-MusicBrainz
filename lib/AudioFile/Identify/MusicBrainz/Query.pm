@@ -12,6 +12,8 @@ The main query object. This is probably the thing you want to use.
 
 package AudioFile::Identify::MusicBrainz::Query;
 
+use AudioFile::Identify::MusicBrainz;
+
 use strict;
 use warnings::register;
 use base qw(AudioFile::Identify::MusicBrainz::Object);
@@ -146,9 +148,11 @@ sub FileInfoLookup {
   my $rdf = $self->_fileinfolookup_to_rdf($query);
 
   #die $rdf;
-  
+
+  my $VERSION = $AudioFile::Identify::MusicBrainz::VERSION; 
+ 
   my $ua = LWP::UserAgent->new(
-    agent => "AudioFile::Identify::MusicBrainz/0.1 http://jerakeen.org/programming/musicbrainz",
+    agent => "AudioFile::Identify::MusicBrainz/$VERSION http://jerakeen.org/programming/musicbrainz",
   );
 
   my $req = HTTP::Request->new(POST => $self->url,);

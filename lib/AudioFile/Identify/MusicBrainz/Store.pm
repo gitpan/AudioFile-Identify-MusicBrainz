@@ -57,7 +57,7 @@ sub album {
     $self->{album}{$id} = $set;
     return $self;
   } else {
-    my $album = $self->{album}{$id} or die "No album with id $id";
+    my $album = $self->{album}{$id} or croak "No album with id $id";
     return $album;
   }
 }
@@ -79,7 +79,7 @@ sub artist {
     $self->{artist}{$id} = $set;
     return $self;
   } else {
-    my $artist = $self->{artist}{$id} or die "No artist with id $id";
+    my $artist = $self->{artist}{$id} or croak "No artist with id $id";
     return $artist;
   }
 }
@@ -101,7 +101,7 @@ sub track {
     $self->{track}{$id} = $set;
     return $self;
   } else {
-    my $track = $self->{track}{$id} or die "No track with id $id";
+    my $track = $self->{track}{$id} or croak "No track with id $id";
     return $track;
   }
 }

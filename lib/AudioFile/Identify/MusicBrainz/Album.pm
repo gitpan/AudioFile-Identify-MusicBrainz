@@ -17,6 +17,7 @@ use warnings::register;
 use base qw(AudioFile::Identify::MusicBrainz::Object);
 use AudioFile::Identify::MusicBrainz::Track;
 use XML::DOM;
+use Carp;
 
 =head2 title
 
@@ -140,7 +141,7 @@ sub trackList {
     }
     return $self;
   } else {
-    die "Must call with node\n";
+    croak "Must call with node\n";
   }
 }
 
@@ -153,7 +154,7 @@ track order for the album.
 
 sub tracks {
   my $self = shift;
-  return map { $self->store->track($_) } $self->{tracks};
+  return [ map { $self->store->track($_) } @{ $self->{tracks} } ];
 }
 
 =head2 tracks(index)

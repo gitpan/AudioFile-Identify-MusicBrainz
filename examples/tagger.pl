@@ -55,6 +55,7 @@ for my $result (@{$query->results}) {
     print "  ".$result->track->artist->title
           ." - ".$result->album->title
           ." - #".$result->track->trackNum
+          ." / ".scalar( @{ $result->album->tracks } )
           ." ".$result->track->title
           ." (".$result->relevance.")"
           ."\n";
