@@ -141,9 +141,9 @@ sub releaseDateList {
       my $date = $dates->item($i);
 
       my $dateStr = $date->getElementsByTagName('dc:date')
-	->item(0)->getFirstChild()->getNodeValue();
+                         ->item(0)->getFirstChild()->getNodeValue();
       my $ctryStr = $date->getElementsByTagName('mm:country')
-	->item(0)->getFirstChild()->getNodeValue();
+                         ->item(0)->getFirstChild()->getNodeValue();
 
       $self->{releaseDates}->{$ctryStr} = $dateStr;
     }
@@ -198,7 +198,7 @@ sub trackList {
     for (my $i = 0; $i < $tracks->getLength; $i++) {
       my $id = $tracks->item($i)->getAttributeNode('rdf:resource')->getValue;
       my $track = AudioFile::Identify::MusicBrainz::Track->new($id,
-							       $self->store);
+                     $self->store);
       # Initialize the trackNum based on the position in the
       # mm:trackList sequence
       $track->trackNum($i + 1);

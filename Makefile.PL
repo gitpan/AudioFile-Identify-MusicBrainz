@@ -3,13 +3,13 @@ use ExtUtils::MakeMaker;
 WriteMakefile
 (
           'INSTALLDIRS' => 'site',
-          'PREREQ_PM' => {
-                           'XML::DOM' => '0',
-                           'Test::More' => 0,
-                           'LWP' => '0'
-                         },
           'NAME' => 'AudioFile::Identify::MusicBrainz',
           'PL_FILES' => {},
-          'VERSION_FROM' => 'lib/AudioFile/Identify/MusicBrainz.pm'
+          'VERSION_FROM' => 'lib/AudioFile/Identify/MusicBrainz.pm',
+          'PREREQ_PM' => {
+                           'Test::More' => 0,
+                           'XML::DOM' => '0',
+                           'LWP' => '0'
+                         }
         )
 ;

@@ -22,24 +22,25 @@ See L<AudioFile::Identify::MusicBrainz::Query> for details,
 but in summary:
 
   use AudioFile::Identify::MusicBrainz::Query;
-  my $query = AudioFile:::Identify::MusicBrainz::Query->new();
+  my $query = AudioFile::Identify::MusicBrainz::Query->new();
   $query->FileInfoLookup(
       artist => 'coldplay',
       title => 'yellow',
-      items => 30,
+      items => 5,
   ) or die "Could not query: " . $query->error();
   print "I got ".scalar(@{$query->results})." results\n";
 
-  print "Most likely album is ".$query->result(0)->album->title;
-  print "Most likely trackNum is ".$query->result(0)->track->trackNum;
-
+  print "Most likely album is '". 
+    $query->result(0)->album->title ."'\n";
+  print "Most likely trackNum is '". 
+    $query->result(0)->track->trackNum ."'\n";
 
 See L<AudioFile::Identify::MusicBrainz::Album>, L<AudioFile::Identify::MusicBrainz::Artist> and L<AudioFile::Identify::MusicBrainz::Track>
 for details of the methods you can call on these returned objects.
 
-There's an example of it's use in the I<examples> folder in the tarball,
-I<tagger.pl> (see L<tagger.pl>), it's a utility that examines the ID3
-tags of an MP3 file, and will print what musicbrainz suggests for the
+There's an example of its use in the I<examples> folder in the tarball,
+I<tagger.pl> (see L<tagger.pl>). This is a utility that examines the ID3
+tags of an MP3 file, and will print what MusicBrainz suggests for the
 rest of the tags.
 
 =head1 AUTHOR
@@ -92,6 +93,6 @@ use strict;
 use warnings::register;
 use lib './lib';
 
-our $VERSION=0.30;
+our $VERSION=0.31;
 
 1;
