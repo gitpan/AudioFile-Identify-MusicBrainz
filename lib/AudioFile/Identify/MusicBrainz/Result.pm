@@ -28,7 +28,7 @@ sub relevance {
   my $self = shift;
   my $set = shift;
   if (defined($set)) {
-    if (ref($set) and $set->getFirstChild) {
+    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
       $self->{relevance} = $set->getFirstChild->toString;
     } else {
       $self->{relevance} = $set;
@@ -50,7 +50,7 @@ parameters, sets the ID of the album if called with a parameter.
 sub album {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
+  if (defined($set) and $set->isa('XML::DOM::Element')) {
     $self->{album} = $set->getAttributeNode('rdf:resource')->getValue;
     return $self;
   } else {
@@ -90,7 +90,7 @@ with no parameters, sets the ID of the track if called with a parameter.
 sub track {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
+  if (defined($set) and $set->isa('XML::DOM::Element')) {
     $self->{track} = $set->getAttributeNode('rdf:resource')->getValue;
     return $self;
   } else {

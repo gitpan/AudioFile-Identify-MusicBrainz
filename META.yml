@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: AudioFile-Identify-MusicBrainz
-version: 0.22
+version: 0.23
 license: lgpl
 distribution_type: module
 requires:
@@ -14,7 +14,7 @@ conflicts: {}
 provides:
   AudioFile::Identify::MusicBrainz:
     file: lib/AudioFile/Identify/MusicBrainz.pm
-    version: 0.22
+    version: 0.23
   AudioFile::Identify::MusicBrainz::Album:
     file: lib/AudioFile/Identify/MusicBrainz/Album.pm
   AudioFile::Identify::MusicBrainz::Artist:

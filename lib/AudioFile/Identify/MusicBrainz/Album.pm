@@ -29,7 +29,7 @@ to set.
 sub title {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->getFirstChild) {
+  if (defined($set) and $set->isa('XML::DOM::Element') and $set->getFirstChild) {
     $self->{title} = $set->getFirstChild->toString;
     return $self;
   } else {
@@ -63,7 +63,7 @@ object, assuming this resource is in the store, which it should be.
 sub creator {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
+  if (defined($set) and $set->isa('XML::DOM::Element')) {
     $self->{creator} = $set->getAttributeNode("rdf:resource")->getValue;
     return $self;
   } else {
@@ -129,7 +129,7 @@ use the C<track> or C<tracks> method.
 sub trackList {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and ref($set)) {
+  if (defined($set) and $set->isa('XML::DOM::Element')) {
     my $tracks = $set->getElementsByTagName('rdf:li');
     for (my $i = 0; $i < $tracks->getLength; $i++) {
       my $id = $tracks->item($i)->getAttributeNode('rdf:resource')->getValue;

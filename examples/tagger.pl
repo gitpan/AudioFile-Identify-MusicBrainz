@@ -20,25 +20,24 @@ use strict;
 
 use lib qw(./lib ../lib);
 use AudioFile::Identify::MusicBrainz::Query;
-use MP3::Info;
+use AudioFile::Info;
 
 my $filename = shift;
+
 unless ($filename and -e $filename) {
   print "Usage: tagger.pl <filename>\n";
   exit;
   
 }
 
-my $tag   = get_mp3tag($filename) or die "No tag in $filename";
-my $meta  = get_mp3info($filename) or die "No info in $filename";
-
 my $query = AudioFile::Identify::MusicBrainz::Query->new() or die "Can't make query";
+my $info = AudioFile::Info->new($filename);
 
 my $info = {
-  track => $tag->{TITLE},
-  artist => $tag->{ARTIST},
-  album => $tag->{ALBUM},
-  tracknum => $tag->{TRACKNUM},
+  title => $info->title,
+  artist => $info->artist,
+  album => $info->album,
+  tracknum => $info->track,
   items => 5,
 };
 
@@ -65,5 +64,3 @@ for my $result (@{$query->results}) {
           ."\n";
   }
 }
-
-#print $query->response;

@@ -55,7 +55,7 @@ sub _fileinfolookup_to_rdf {
     album_id
     track_id
   );
-
+  
   unshift(@fields, 'dummy'); # RDF templates number them from zero.
 
   my $query;
@@ -69,6 +69,7 @@ sub _fileinfolookup_to_rdf {
   $query->{secs} = $query->{secs} * 1000 if $query->{secs};
 
   $query->{tracknum} =~ s/\D.*// if $query->{tracknum};
+  $query->{track} ||= $query->{title}; # common error
 
   my $params = {};
   for (my $i = 0; $i < scalar(@fields); $i++) {

@@ -88,6 +88,6 @@ use strict;
 use warnings::register;
 use lib './lib';
 
-our $VERSION=0.22;
+our $VERSION=0.23;
 
 1;

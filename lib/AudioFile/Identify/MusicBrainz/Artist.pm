@@ -28,7 +28,7 @@ sub title {
   my $self = shift;
   my $set = shift;
   if (defined($set)) {
-    if (ref($set) and $set->getFirstChild) {
+    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
       $self->{title} = $set->getFirstChild->toString;
     } else {
       $self->{title} = $set;
@@ -49,7 +49,7 @@ names.
 sub sortName {
   my $self = shift;
   my $set = shift;
-  if (defined($set) and $set->getFirstChild) {
+  if (defined($set) and $set->isa('XML::DOM::Element')and $set->getFirstChild) {
     $self->{sortname} = $set->getFirstChild->toString;
     return $self;
   } else {

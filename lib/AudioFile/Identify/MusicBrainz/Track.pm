@@ -27,13 +27,14 @@ sub title {
   my $self = shift;
   my $set = shift;
   if (defined($set)) {
-    if (ref($set) and $set->getFirstChild) {
+    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
       $self->{title} = $set->getFirstChild->toString;
     } else {
       $self->{title} = $set;
     }
     return $self;
   } else {
+    $self->getData;
     return $self->{title};
   }
 }
@@ -49,13 +50,14 @@ sub trackNum {
   my $self = shift;
   my $set = shift;
   if (defined($set)) {
-    if (ref($set) and $set->getFirstChild) {
+    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
       $self->{trackNum} = $set->getFirstChild->toString;
     } else {
       $self->{trackNum} = $set;
     }
     return $self;
   } else {
+    $self->getData;
     return $self->{trackNum};
   }
 }
@@ -71,13 +73,14 @@ sub trmid {
   my $self = shift;
   my $set = shift;
   if (defined($set)) {
-    if (ref($set) and $set->getFirstChild) {
+    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
       $self->{trmid} = $set->getFirstChild->toString;
     } else {
       $self->{trmid} = $set;
     }
     return $self;
   } else {
+    $self->getData;
     return $self->{trmid};
   }
 }
@@ -93,10 +96,11 @@ method, which will return a C<AudioFile::Identify::MusicBrainz::Artist> object.
 sub creator {
   my $self = shift;
   my $set = shift;
-  if (defined($set)) {
+  if (defined($set) and $set->isa('XML::DOM::Element')) {
     $self->{creator} = $set->getAttributeNode("rdf:resource")->getValue;
     return $self;
   } else {
+    $self->getData;
     return $self->{creator};
   }
 }
@@ -122,7 +126,7 @@ sub duration {
   my $self = shift;
   my $set = shift;
   if (defined($set)) {
-    if (ref($set) and $set->getFirstChild) {
+    if ($set->isa('XML::DOM::Element') and $set->getFirstChild) {
       $self->{duration} = $set->getFirstChild->toString;
       $self->{duration} = int($self->{duration} / 1000); # SECONDS, damnit.
     } else {
@@ -130,6 +134,7 @@ sub duration {
     }
     return $self;
   } else {
+    $self->getData;
     return $self->{duration};
   }
 }
@@ -151,7 +156,7 @@ sub getData {
   return $self if $self->{got_data};
   my $url = $self->id;
   #print STDERR "Parsing from URL $url\n";
-  my $data = get($url);
+  my $data = get($url); # TODO reuse LWP::Useragent stuff from query.
 
   my $parser = new XML::DOM::Parser;
   my $doc = $parser->parse($data);
