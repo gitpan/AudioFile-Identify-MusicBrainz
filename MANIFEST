@@ -1,0 +1,18 @@
+Build.PL
+Makefile.PL
+META.yml
+COPYING
+MANIFEST			This list of files
+examples/query_test.pl
+examples/tagger.pl
+lib/AudioFile/Identify/MusicBrainz.pm
+lib/AudioFile/Identify/MusicBrainz/Album.pm
+lib/AudioFile/Identify/MusicBrainz/Artist.pm
+lib/AudioFile/Identify/MusicBrainz/Object.pm
+lib/AudioFile/Identify/MusicBrainz/Query.pm
+lib/AudioFile/Identify/MusicBrainz/RDF.pm
+lib/AudioFile/Identify/MusicBrainz/Result.pm
+lib/AudioFile/Identify/MusicBrainz/Store.pm
+lib/AudioFile/Identify/MusicBrainz/Track.pm
+t/00use.t
+t/01objects.t

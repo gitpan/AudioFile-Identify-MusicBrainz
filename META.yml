@@ -1,0 +1,34 @@
+--- #YAML:1.0
+name: AudioFile-Identify-MusicBrainz
+version: 0.2
+license: lgpl
+distribution_type: module
+requires:
+  LWP: 0
+  Test::More: 0
+  XML::DOM: 0
+  perl: 5.6.0
+recommends: {}
+build_requires: {}
+conflicts: {}
+provides:
+  AudioFile::Identify::MusicBrainz:
+    file: lib/AudioFile/Identify/MusicBrainz.pm
+    version: 0.2
+  AudioFile::Identify::MusicBrainz::Album:
+    file: lib/AudioFile/Identify/MusicBrainz/Album.pm
+  AudioFile::Identify::MusicBrainz::Artist:
+    file: lib/AudioFile/Identify/MusicBrainz/Artist.pm
+  AudioFile::Identify::MusicBrainz::Object:
+    file: lib/AudioFile/Identify/MusicBrainz/Object.pm
+  AudioFile::Identify::MusicBrainz::Query:
+    file: lib/AudioFile/Identify/MusicBrainz/Query.pm
+  AudioFile::Identify::MusicBrainz::RDF:
+    file: lib/AudioFile/Identify/MusicBrainz/RDF.pm
+  AudioFile::Identify::MusicBrainz::Result:
+    file: lib/AudioFile/Identify/MusicBrainz/Result.pm
+  AudioFile::Identify::MusicBrainz::Store:
+    file: lib/AudioFile/Identify/MusicBrainz/Store.pm
+  AudioFile::Identify::MusicBrainz::Track:
+    file: lib/AudioFile/Identify/MusicBrainz/Track.pm
+generated_by: Module::Build version 0.19
