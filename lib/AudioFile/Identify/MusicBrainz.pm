@@ -1,6 +1,6 @@
 =head1 NAME
 
-AudioFile::Identify::MusicBrainz
+AudioFile::Identify::MusicBrainz - A pure-perl MusicBrainz client implementation
 
 =head1 DESCRIPTION
 
@@ -88,6 +88,6 @@ use strict;
 use warnings::register;
 use lib './lib';
 
-our $VERSION=0.2;
+our $VERSION=0.21;
 
 1;

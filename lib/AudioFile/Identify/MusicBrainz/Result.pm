@@ -1,6 +1,6 @@
 =head1 NAME
 
-AudioFile::Identify::MusicBrainz
+AudioFile::Identify::MusicBrainz::Result
 
 =head1 DESCRIPTION
 
