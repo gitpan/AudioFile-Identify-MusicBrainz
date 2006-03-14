@@ -94,7 +94,7 @@ sub parse {
       if ($self->can($tag)) {
         $self->$tag($child);
       } else {
-        carp(ref($self), " has no method for property $tag (data is ",
+        warn(ref($self), " has no method for property $tag (data is ",
 	     $child->toString, ")\n");
       }
     }

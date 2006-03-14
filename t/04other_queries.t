@@ -33,7 +33,7 @@ unless (ok($query->FileInfoLookup(artist => 'Big Head Todd & the Monsters',
 
   is($result->type, "Album", "Result type is Album");
 
-  is($result->album->artist->title, "Big Head Todd and the Monsters",
+  is($result->album->artist->title, "Big Head Todd and The Monsters",
      "Matching artist name");
 }
 

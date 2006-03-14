@@ -2,9 +2,9 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
+          'PL_FILES' => {},
           'INSTALLDIRS' => 'site',
           'NAME' => 'AudioFile::Identify::MusicBrainz',
-          'PL_FILES' => {},
           'VERSION_FROM' => 'lib/AudioFile/Identify/MusicBrainz.pm',
           'PREREQ_PM' => {
                            'Test::More' => 0,

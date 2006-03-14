@@ -36,7 +36,7 @@ ok($query->FileInfoLookup(
 # to be properly general, loop through all results till we find a nice one.
 my $result;
 foreach my $r (@{ $query->results() }) {
-  if ($r->album->id eq 'http://musicbrainz.org/album/506fe9cf-29c6-4318-9070-da9463f51617') {
+  if ($r->album->id =~ m[http://musicbrainz.org(/mm-\d+\.\d+)?/album/506fe9cf-29c6-4318-9070-da9463f51617]) {
     $result = $r;
   }
 }
@@ -47,9 +47,9 @@ isa_ok(
   "AudioFile::Identify::MusicBrainz::Result",
   "got result object");
 
-is(
+like(
   $result->album->id,
-  'http://musicbrainz.org/album/506fe9cf-29c6-4318-9070-da9463f51617',
+  qr[http://musicbrainz.org(/mm-\d+\.\d+)?/album/506fe9cf-29c6-4318-9070-da9463f51617],
   'Got the album ID with all the funky features');
 
 like(
@@ -66,7 +66,7 @@ is(
   "Matching ASIN");
 is(
   $result->album->coverart,
-  "http://images.amazon.com/images/P/B00005YW4H.01.MZZZZZZZ.jpg",
+  undef, # "http://images.amazon.com/images/P/B00005YW4H.01.MZZZZZZZ.jpg",
   "Matching cover art URL");
 like(
   $result->track->title,
@@ -92,9 +92,9 @@ is(
   2,
   "Two release dates returned");
 
-is(
+like(
   $releaseDates->{"US"},
-  "2002",
+  qr/^2002/,
   "US Release Date");
 
 is(

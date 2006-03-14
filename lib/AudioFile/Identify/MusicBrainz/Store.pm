@@ -67,7 +67,8 @@ Returns the type as a string, or croaks if id is undefined.
 sub objType {
     my $id = shift;
     croak "Need an id" unless defined($id);
-    $id =~ m{musicbrainz.org/(\w+)/};
+    #print STDERR "###'$id'\n";
+    $id =~ m{musicbrainz.org(?:/mm-\d+\.\d+)?/(\w+)/} or warn("Can't parse `$id'"), return;
     return $1;
 }
 

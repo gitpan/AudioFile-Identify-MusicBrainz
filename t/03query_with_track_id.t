@@ -44,7 +44,7 @@ unless (ok($query->FileInfoLookup(artist => 'Aerosmith',
   like($result->album->title, qr/Big Ones/i, "Matching album name");
   is($result->album->asin, "B000000OTU", "Matching ASIN");
   is($result->album->coverart,
-     "http://images.amazon.com/images/P/B000000OTU.01.MZZZZZZZ.jpg",
+     undef, # "http://images.amazon.com/images/P/B000000OTU.01.MZZZZZZZ.jpg",
      "Matching cover art URL");
   like($result->track->title, qr/Amazing/i, "Matching track title");
 }

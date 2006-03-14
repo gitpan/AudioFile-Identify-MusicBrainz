@@ -6,4 +6,7 @@ Revision history for URI::Title
 0.3 2004/03/16 (revision 643)
   - Integration of fantastic patch by Mike McCallister <mike@metalogue.com>
     for protocol changes and lazy object loading.
+
+0.4 2006/03/14
+  - Wow, I suck. But someone sent me a patch. Thanks, Ilya Zakharevich <ilya@Math.Berkeley.EDU>
   

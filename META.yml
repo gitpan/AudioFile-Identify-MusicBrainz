@@ -1,8 +1,8 @@
---- #YAML:1.0
+---
 name: AudioFile-Identify-MusicBrainz
-version: 0.31
+version: 0.4
 author:
-  - Tom Insam E<lt>tom@jerakeen.orgE<gt>
+  - 'Tom Insam E<lt>tom@jerakeen.orgE<gt>'
 abstract: A pure-perl MusicBrainz client implementation
 license: lgpl
 requires:
@@ -13,7 +13,7 @@ requires:
 provides:
   AudioFile::Identify::MusicBrainz:
     file: lib/AudioFile/Identify/MusicBrainz.pm
-    version: 0.31
+    version: 0.4
   AudioFile::Identify::MusicBrainz::Album:
     file: lib/AudioFile/Identify/MusicBrainz/Album.pm
   AudioFile::Identify::MusicBrainz::Artist:
@@ -30,4 +30,4 @@ provides:
     file: lib/AudioFile/Identify/MusicBrainz/Store.pm
   AudioFile::Identify::MusicBrainz::Track:
     file: lib/AudioFile/Identify/MusicBrainz/Track.pm
-generated_by: Module::Build version 0.24
+generated_by: Module::Build version 0.2612
